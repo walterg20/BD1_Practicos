@@ -8,7 +8,7 @@ go
 CREATE DATABASE base_consorcio_2025;
 */
 --CREATE DATABASE base_consorcio_2025;
-go
+--go
 USE base_consorcio_2025;
 go
 
