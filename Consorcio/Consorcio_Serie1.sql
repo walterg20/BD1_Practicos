@@ -55,3 +55,49 @@ WHERE nombre LIKE 'EDIFICIO-3%'
 --12) 
 SELECT concat(apellido_nombre,'-' ,telefono, '-',fecha_nacimiento) as 'Datos Personales'
 	FROM persona where sexo = 'F';
+
+--13)
+SELECT * FROM gasto
+WHERE importe BETWEEN 10 AND 100;
+
+--14)
+SELECT * FROM persona
+WHERE DATEPART(YYYY,fecha_nacimiento) BETWEEN 1960 and 1969
+ORDER BY fecha_nacimiento DESC
+-- fecha_nacimiento >= '19600101' AND fecha_nacimiento < '19610101' 
+--fecha_nacimiento BETWEEN CONVERT(DATETIME,'1960-01-01 00:00:00 ',102) AND CONVERT(DATETIME,'1960-12-31 00:00:00',102)
+
+--15)
+SELECT * FROM localidad
+WHERE	provincia_id = 1 OR provincia_id = 2
+
+--16)
+SELECT * FROM edificio
+WHERE direccion LIKE '____N%'
+
+--17)
+SELECT TOP 237 *  FROM gasto
+ORDER BY importe ASC
+
+--18)
+SELECT TOP 237  WITH TIES importe FROM gasto
+ORDER BY importe ASC
+
+--19) 
+SELECT periodo,fecha_pago, importe, 'Importe Actualizado' = CASE
+WHEN importe < 10000 THEN (importe * 1.15)
+WHEN importe >= 10000 AND importe <= 20000 THEN (importe * 1.10)
+ELSE (importe * 1.05)
+END
+FROM gasto
+ORDER BY importe DESC
+
+--20)
+SELECT 
+    SUM(CASE WHEN estado_civil = 'c' THEN 1 ELSE 0 END) AS Casado,
+    SUM(CASE WHEN estado_civil = 'S' THEN 1 ELSE 0 END) AS Soltero
+FROM persona;
+
+--21)
+SELECT SUM(importe) as Sumatoria, Count(*) as Cantidad, AVG(importe) as Promedio
+FROM gasto
