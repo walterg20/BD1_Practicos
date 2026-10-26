@@ -1,4 +1,4 @@
-CREATE DATABASE sql_ejercicios;
+--CREATE DATABASE sql_ejercicios;
 USE sql_ejercicios;
 
 DROP TABLE PedidoLibreria;
