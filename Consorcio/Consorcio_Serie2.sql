@@ -1,13 +1,13 @@
 
 -- 1. Realizar una copia de seguridad "Solo copia" de la base original
 -- Esto evita romper cualquier cadena de backups que ya tengas configurada en producción.
-BACKUP DATABASE [base_consorcio_2025]
-TO DISK = 'E:\UNNE\Base de datos I\Practico-Laboratorio\Consorcio\consorcio_temp.bak' 
-WITH COPY_ONLY, FORMAT, INIT, STATS = 10;
-GO
+--BACKUP DATABASE [base_consorcio_2025]
+--TO DISK = 'E:\UNNE\Base de datos I\Practico-Laboratorio\Consorcio\consorcio_temp.bak' 
+--WITH COPY_ONLY, FORMAT, INIT, STATS = 10;
+--GO
 
-USE consorcio_test_update
-Go
+--USE consorcio_test_update
+--Go
 --1) 
 SELECT * FROM persona WHERE telefono = NULL --no Sale nada
 
@@ -66,5 +66,41 @@ edad
  SELECT apellido_nombre, telefono, estado_civil FROM persona WHERE telefono IS NULL OR estado_civil is NULL
 
  --16)
- SELECT P.apellido_nombre, A.vive_ahi FROM administrador as a
+ SELECT P.apellido_nombre, A.vive_ahi, 'Vive?' = 
+				CASE
+					WHEN A.vive_ahi = 'S' THEN 'VIVE'
+					WHEN A.vive_ahi = 'N' THEN 'NO VIVE'
+				    ELSE 'DESCONOCIDO'--ISNULL(A.vive_ahi, 'DESCONOCIDO')
+				END
+ FROM administrador as a
  INNER JOIN persona AS p ON P.persona_id = A.administrador_id 
+ 
+ --17)
+ SELECT ISNULL(fecha_pago, '01-01-1900') as Fecha, importe FROM gasto
+ where not importe is null;
+
+ --18) 
+SELECT provincia_id, localidad_id, ISNULL(nombre, 'Sin nombre asignado') FROM localidad
+
+--19)
+SELECT provincia_id, nombre, poblacion FROM provincia
+WHERE nombre IS NULL OR poblacion IS NULL
+
+--20)
+SELECT * FROM persona
+ORDER BY telefono DESC
+
+SELECT ISDATE('11-2-2026') AS DATE
+
+SELECT ISDATE('02/11/2026') AS DATE
+
+SELECT ISDATE('06/17/2026')
+set dateformat dmy
+
+SELECT ISDATE('17-06-2026') AS DATE
+
+SELECT ISDATE('17-06-26') AS DATE
+
+SELECT ISDATE('2026-06-11') AS DATE
+
+SELECT ISDATE('20260211') AS DATE
